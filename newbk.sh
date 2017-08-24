@@ -65,16 +65,9 @@ DESTINO='/backup'
 #--------------------------------------------------------
 
 ###----------- COMECANDO AQUI A LISTA DE DIRETORIOS, UM POR LINNHA ---##
+###----------- NAO COLOCAR A ULTIMA / NO CAMINHO PARA OS DIRETORIOS --##
 DIRETORIOS=(
-/home/samba/shares/cliente
-/home/samba/shares/comercial
-/home/samba/shares/financeiro
-/home/samba/shares/init
-/home/samba/shares/srv
-/home/samba/shares/teste
-/home/samba/shares/utilitarios
-/srv/www
-/home/samba/shares/web
+/caminho/diretorio
 )
 ###------------ FINALIZA AQUI A LISTA DOS BACKUPS ---------------- #####
 
