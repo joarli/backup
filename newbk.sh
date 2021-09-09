@@ -1,6 +1,6 @@
 #!/bin/bash
 #--------------------------------------------------------
-#--- SCRIPT DE BACKUP INIT NET - V.1.0.1 ----------------
+#--- SCRIPT DE BACKUP INIT NET - V.1.0.3 ----------------
 #--- DESENVOLVIDO POR: INIT NET SOCIEDADE EMP. LTDA -----
 #--------------------------------------------------------
 #--- SICRONIA OS DIRETORIOS VIA RSYNC E AVISA O ADM ----
@@ -64,10 +64,14 @@ DESTINO='/backup'
 # Finalizar os diretorios sem / para copiar a pasta toda-
 #--------------------------------------------------------
 
-###----------- COMECANDO AQUI A LISTA DE DIRETORIOS, UM POR LINNHA ---##
-###----------- NAO COLOCAR A ULTIMA / NO CAMINHO PARA OS DIRETORIOS --##
+###----------- RAIZ PRINCIPAL DOS DIRETORIOS QUE SERAM COPIADOS    ---##
+###----------- EXEMPLO: /home/samba/shares/                         --##
+RAIZ="/nome/diretorio/"
+
+###----------- COLOCAR SOMENTE O NOME DOS DIRETORIOS PARA COPIA  ---##
+###----------- VERIFCAR DIRETORIOS ( ls -la | awk '{print $9}'    --##
 DIRETORIOS=(
-/caminho/diretorio
+caminho/diretorio
 )
 ###------------ FINALIZA AQUI A LISTA DOS BACKUPS ---------------- #####
 
@@ -76,21 +80,19 @@ echo  "#---- INICIANDO BACKUP DO DIA $data ---#" >> $RL
 echo  "#-------------------------------------------------#" >> $RL
 
 for dir in "${DIRETORIOS[@]}"; do
-		echo "$data" >> "$dir/data.txt"
+		echo "$data" >> "$RAIZ$$dir/data.txt"
 
 		#quando em teste, deixar essa linha livre e comentar a de baixo
-		#echo "$dir" $DESTINO
+		#echo "$RAIZ$$dir" $DESTINO
 
 		#Quando em producao deixar essa linha livre e comentar a de cima
-		$RSYNC "$dir" $DESTINO >> $RL
+		$RSYNC "$RAIZ$$dir" $DESTINO >> $RL
 done
 
-#for dirs in "${DIRETORIOS[@]}"; do
-#echo  "#-------------------------------------------------#" > $EMAILLOG
-#echo  "#------------- TAMANHO DOS DIRETORIOS ------------#" >> $EMAILLOG
-#echo  "#-------------------------------------------------#" >> $EMAILLOG
-#du -sh "$dirs" >> $RL2
-#done
+#--------------------------------------------------------
+#  CALCULO DO TEMPO UTILIZADO NO BACKUP
+#--------------------------------------------------------
+
 datafinal=`date +%s`
 soma=`expr $datafinal - $datainicial`
 resultado=`expr 10800 + $soma`
@@ -113,7 +115,7 @@ Uptime: $(uptime)
 -------------------- ----------------------------------------------------
 $(for dirs in "${DIRETORIOS[@]}";
 do
-du -sh $dirs
+du -sh $RAIZ$$dirs
 done)
 -------------------------------------------------------------------------
    ESPACO EM DISCO
