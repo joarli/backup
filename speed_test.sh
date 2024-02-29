@@ -1,6 +1,7 @@
 #!/bin/sh
 #-----------------------------------------------
 #SCRIPT PARA ENVIO DIARIO DO TESTE DE VELOCIDADE
+# v. 1.0 - 29-02-2024
 #-----------------------------------------------
 #Variaveis
 log_simple="./speedtest.log"
